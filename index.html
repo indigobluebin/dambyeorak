@@ -222,6 +222,31 @@ header{
 .btn-ghost{font-size:13px;font-weight:500;padding:8px 15px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer}
 .btn-solid{font-size:13px;font-weight:700;padding:8px 18px;border-radius:8px;border:none;background:var(--accent);color:#1a1814;cursor:pointer}
 </style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCCugq74cAopQflgAQSE0re4URj3grqDk8",
+  authDomain: "dambyeorak-caa0a.firebaseapp.com",
+  databaseURL: "https://dambyeorak-caa0a-default-rtdb.firebaseio.com",
+  projectId: "dambyeorak-caa0a",
+  storageBucket: "dambyeorak-caa0a.firebasestorage.app",
+  messagingSenderId: "534927296018",
+  appId: "1:534927296018:web:9e415f054ca05c7a67facb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const notesRef = ref(db, 'notes');
+const topicRef = ref(db, 'topic');
+
+// Firebase → 전역 노출
+window._fbSet = (path, data) => set(ref(db, path), data);
+window._fbOnNotes = (cb) => onValue(notesRef, snap => cb(snap.val()));
+window._fbOnTopic = (cb) => onValue(topicRef, snap => cb(snap.val()));
+window._fbSetTopic = (v) => set(topicRef, v);
+</script>
 </head>
 <body>
 
@@ -405,12 +430,47 @@ let currentFilter = 'all';
 let myNick = '';
 
 /* ── 저장/로드 ── */
-function save() { try { localStorage.setItem(SK, JSON.stringify(notes)); } catch(e){} }
+function save() {
+  try { localStorage.setItem(SK, JSON.stringify(notes)); } catch(e){}
+  try {
+    if (window._fbSet) {
+      const data = {};
+      notes.forEach(n => {
+        data[n.id] = { ...n, time: n.time instanceof Date ? n.time.toISOString() : n.time };
+      });
+      window._fbSet('notes', data);
+    }
+  } catch(e) {}
+}
 function load() {
   try {
     const r = localStorage.getItem(SK);
     if (r) notes = JSON.parse(r).map(n => ({ ...n, time: new Date(n.time), keywords: n.keywords||[], likes: n.likes||0, myVote: n.myVote||false }));
   } catch(e) { notes = []; }
+}
+
+function startFirebaseSync() {
+  if (!window._fbOnNotes) { setTimeout(startFirebaseSync, 300); return; }
+  window._fbOnNotes(data => {
+    if (!data) return;
+    const myVotes = {};
+    notes.forEach(n => { if (n.myVote) myVotes[n.id] = true; });
+    notes = Object.values(data).map(n => ({
+      ...n,
+      time: new Date(n.time),
+      keywords: n.keywords||[],
+      likes: n.likes||0,
+      myVote: myVotes[n.id]||false
+    }));
+    try { localStorage.setItem(SK, JSON.stringify(notes)); } catch(e){}
+    renderWall(); updateFilters();
+    autoRefreshAnalysis(); refreshTeamProfile();
+  });
+  window._fbOnTopic(t => {
+    if (!t) return;
+    localStorage.setItem(TK, t);
+    document.getElementById('topicPill').textContent = '✦ ' + t;
+  });
 }
 
 /* ── 닉네임 ── */
@@ -437,6 +497,7 @@ function saveTopic() {
   if (!v) return;
   localStorage.setItem(TK, v);
   document.getElementById('topicPill').textContent = '✦ ' + v;
+  if (window._fbSetTopic) window._fbSetTopic(v);
   closeModal();
 }
 function loadTopic() {
@@ -763,7 +824,7 @@ document.addEventListener('keydown', e => {
 
 /* ── 초기화 ── */
 document.getElementById('postBtn').addEventListener('click', addNote);
-load(); assignNick(); loadTopic(); initSwatches(); renderWall(); updateFilters();
+load(); assignNick(); loadTopic(); initSwatches(); renderWall(); updateFilters(); startFirebaseSync();
 </script>
 </body>
 </html>
