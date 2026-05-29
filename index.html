@@ -25,37 +25,48 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 /* ── HEADER ── */
 header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:56px;
-  background:rgba(24,22,20,0.96);
+  padding:0 16px;height:52px;
+  background:rgba(24,22,20,0.97);
   border-bottom:1px solid var(--border);
   position:sticky;top:0;z-index:100;
+  gap:8px;
 }
-.logo{display:flex;align-items:center;gap:2px;text-decoration:none}
-.logo-dam{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent);letter-spacing:3px;line-height:1}
+.logo{display:flex;align-items:center;gap:2px;text-decoration:none;flex-shrink:0}
+.logo-dam{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);letter-spacing:2px;line-height:1}
 .logo-bolt{display:inline-flex;align-items:center;margin:0 1px;animation:zap 3s ease-in-out infinite}
-.logo-bolt svg{width:22px;height:28px;filter:drop-shadow(0 0 5px rgba(255,210,63,0.7))}
+.logo-bolt svg{width:20px;height:26px;filter:drop-shadow(0 0 5px rgba(255,210,63,0.7))}
 @keyframes zap{0%,80%,100%{transform:none}85%{transform:scale(1.4) rotate(-12deg)}90%{transform:scale(0.9) rotate(6deg)}95%{transform:scale(1.1)}}
-.logo-rest{font-family:'Black Han Sans',sans-serif;font-size:20px;color:var(--text);letter-spacing:-0.5px}
-.logo-tag{font-size:12px;color:var(--text3);margin-left:10px}
-.header-right{display:flex;align-items:center;gap:10px}
+.logo-rest{font-family:'Black Han Sans',sans-serif;font-size:19px;color:var(--text);letter-spacing:-0.5px}
+.logo-tag{font-size:11px;color:var(--text3);margin-left:8px;white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .topic-pill{
-  font-size:13px;font-weight:500;color:var(--accent);
+  font-size:12px;font-weight:500;color:var(--accent);
   background:rgba(255,210,63,0.1);border:1px solid rgba(255,210,63,0.25);
-  border-radius:20px;padding:5px 14px;cursor:pointer;transition:all .2s;
-  max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  border-radius:16px;padding:4px 12px;cursor:pointer;transition:all .2s;
+  max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .topic-pill:hover{background:rgba(255,210,63,0.18)}
-.live-wrap{display:flex;align-items:center;gap:5px}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 7px #4ade80;animation:pulse 2s infinite}
+.live-wrap{display:flex;align-items:center;gap:4px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.live-txt{font-size:11px;font-weight:700;color:#4ade80;letter-spacing:1px}
+.live-txt{font-size:10px;font-weight:700;color:#4ade80;letter-spacing:1px}
 
 /* ── TABS ── */
-.tabs{display:flex;padding:0 24px;background:rgba(24,22,20,0.9);border-bottom:1px solid var(--border)}
-.tab{font-size:14px;font-weight:500;padding:12px 18px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+.tabs{display:flex;padding:0;background:rgba(24,22,20,0.95);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-size:13px;font-weight:500;padding:11px 16px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tab:hover:not(.active){color:var(--text)}
-.panel{display:none;padding:24px}.panel.active{display:block}
+.panel{display:none;padding:16px}.panel.active{display:block}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .logo-tag{display:none}
+  header{padding:0 14px}
+  .panel{padding:14px}
+  .input-zone{padding:14px}
+  .topic-pill{max-width:100px;font-size:11px}
+}
 
 /* ── INPUT ZONE ── */
 .input-zone{
@@ -63,7 +74,7 @@ header{
   border-radius:var(--r);padding:16px 18px;margin-bottom:20px;
 }
 .input-top{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:end;margin-bottom:12px}
-@media(max-width:560px){.input-top{grid-template-columns:1fr;gap:8px}}
+@media(max-width:560px){.input-top{grid-template-columns:1fr;gap:8px} .post-btn{width:100%;margin-top:2px}}
 .field-group{display:flex;flex-direction:column;gap:5px}
 .field-lbl{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:0.3px}
 .field-input{
@@ -83,14 +94,14 @@ header{
 }
 .post-btn:hover{background:#ffe055}
 .post-btn:active{transform:scale(.97)}
-.input-bottom{display:flex;align-items:center;gap:8px}
+.input-bottom{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .color-label{font-size:12px;color:var(--text3);flex-shrink:0}
 .swatches{display:flex;gap:6px}
 .swatch{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s;flex-shrink:0}
 .swatch.active{transform:scale(1.3);border-color:rgba(255,255,255,0.8)}
 .nick-divider{width:1px;height:16px;background:var(--border2);flex-shrink:0;margin:0 4px}
 .nick-label{font-size:12px;color:var(--text3);flex-shrink:0}
-.nick-badge{font-size:12px;color:var(--accent);font-weight:600;background:rgba(255,210,63,0.1);padding:2px 10px;border-radius:10px;border:1px solid rgba(255,210,63,0.2)}
+.nick-badge{font-size:12px;color:var(--accent);font-weight:600;background:rgba(255,210,63,0.1);padding:3px 10px;border-radius:10px;border:1px solid rgba(255,210,63,0.2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ── WALL ── */
 .wall-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
@@ -99,7 +110,7 @@ header{
 .chip{font-size:12px;font-weight:500;padding:4px 12px;border-radius:16px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;transition:all .15s;background:transparent}
 .chip.active{background:rgba(255,210,63,0.12);border-color:rgba(255,210,63,0.5);color:var(--accent)}
 .wall{columns:4 160px;column-gap:12px}
-@media(max-width:520px){.wall{columns:2 140px}}
+@media(max-width:480px){.wall{columns:1 1fr !important;}} @media(min-width:481px) and (max-width:700px){.wall{columns:2 140px}}
 .note{
   break-inside:avoid;margin-bottom:12px;
   border-radius:6px;padding:14px 12px 10px;
@@ -164,6 +175,32 @@ header{
 @media(max-width:600px){.analysis-grid{grid-template-columns:1fr}}
 .full-width{grid-column:1/-1}
 .result-empty{color:var(--text3);font-style:italic}
+.viz-type-group{margin-bottom:14px}
+.viz-type-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.viz-type-icon{font-size:16px}
+.viz-type-name{font-size:13px;font-weight:700;color:var(--text)}
+.viz-type-count{font-size:12px;color:var(--text3);margin-left:auto}
+.viz-note-chips{display:flex;flex-wrap:wrap;gap:5px}
+.viz-note-chip{
+  font-size:12px;padding:4px 10px;border-radius:16px;
+  border:1px solid rgba(0,0,0,0.1);cursor:default;
+  max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  line-height:1.4;
+}
+.viz-target-group{margin-bottom:16px}
+.viz-target-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.viz-target-label{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.viz-target-bar-wrap{flex:1;display:flex;align-items:center;gap:8px}
+.viz-target-bar-track{flex:1;height:7px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.viz-target-bar-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .6s ease}
+.viz-target-num{font-size:12px;color:var(--text3);flex-shrink:0;width:20px}
+.viz-kw-grid{display:flex;flex-wrap:wrap;gap:8px}
+.viz-kw-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);min-width:80px;text-align:center}
+.viz-kw-count{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;color:var(--accent)}
+.viz-kw-label{font-size:11px;font-weight:700;color:var(--text2)}
+.viz-kw-bar{width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);margin-top:4px;overflow:hidden}
+.viz-kw-bar-fill{height:100%;border-radius:2px;background:var(--accent);transition:width .6s ease}
+.viz-empty{font-size:13px;color:var(--text3);font-style:italic;padding:8px 0}
 .result-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;animation:fadeUp .25s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .result-title{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:7px}
@@ -316,17 +353,17 @@ window._fbSetTopic = (v) => set(topicRef, v);
     <button class="refresh-btn" onclick="refreshAllAnalysis()">🔄 전체 갱신</button>
   </div>
   <div class="analysis-grid">
-    <div class="result-card" id="card-cluster">
+    <div class="result-card full-width" id="card-cluster">
       <div class="result-title">🗂 유형별 묶기</div>
-      <div class="result-body result-empty">아이디어를 입력하면 자동으로 분석돼요</div>
+      <div id="card-cluster-body" class="result-empty" style="font-size:13px;color:var(--text3)">아이디어를 입력하면 자동으로 분석돼요</div>
     </div>
-    <div class="result-card" id="card-summary">
-      <div class="result-title">📝 핵심 요약</div>
-      <div class="result-body result-empty">아이디어를 입력하면 자동으로 분석돼요</div>
+    <div class="result-card full-width" id="card-target">
+      <div class="result-title">👥 대상별 묶기</div>
+      <div id="card-target-body" class="result-empty" style="font-size:13px;color:var(--text3)">아이디어를 입력하면 자동으로 분석돼요</div>
     </div>
-    <div class="result-card full-width" id="card-expand">
-      <div class="result-title">💡 아이디어 발전</div>
-      <div class="result-body result-empty">아이디어를 입력하면 자동으로 분석돼요</div>
+    <div class="result-card full-width" id="card-keyword">
+      <div class="result-title">🏷 키워드 분석</div>
+      <div id="card-keyword-body" class="result-empty" style="font-size:13px;color:var(--text3)">아이디어를 입력하면 자동으로 분석돼요</div>
     </div>
   </div>
 </div>
@@ -665,12 +702,10 @@ function renderStatGrid() {
 }
 
 function refreshAllAnalysis() {
-  if (!notes.length) { alert('먼저 아이디어를 입력해주세요!'); return; }
-  const topic = localStorage.getItem(TK) || '신규 사업';
-  ['cluster','summary','expand'].forEach(type => {
-    const body = document.querySelector('#card-'+type+' .result-body');
-    if (body) { body.textContent = getAnalysis(type, topic); body.classList.remove('result-empty'); }
-  });
+  if (!notes.length) return;
+  renderClusterViz();
+  renderTargetViz();
+  renderKeywordViz();
   const now = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   const timeEl = document.getElementById('analysisUpdateTime');
   if (timeEl) timeEl.textContent = now + ' 갱신됨';
@@ -681,43 +716,85 @@ function autoRefreshAnalysis() {
   refreshAllAnalysis();
 }
 
-function getAnalysis(type, topic) {
+/* ── 유형별 묶기 ── */
+function renderClusterViz() {
+  const el = document.getElementById('card-cluster-body');
+  if (!el) return;
   const byType = {};
-  notes.forEach(n => { const t = n.type||'미분류'; (byType[t] = byType[t]||[]).push(n); });
-  const sortedTypes = Object.entries(byType).sort((a,b) => b[1].length - a[1].length);
-  const allKw = notes.flatMap(n => n.keywords||[]);
-  const kwCount = {};
-  allKw.forEach(k => kwCount[k] = (kwCount[k]||0)+1);
-  const topKw = Object.entries(kwCount).sort((a,b)=>b[1]-a[1]).slice(0,5).map(e=>e[0]);
-  const byLikes = [...notes].sort((a,b)=>(b.likes||0)-(a.likes||0));
+  notes.forEach(n => { const t = n.type||'미분류'; (byType[t]=byType[t]||[]).push(n); });
+  const sorted = Object.entries(byType).sort((a,b)=>b[1].length-a[1].length);
+  if (!sorted.length) { el.innerHTML='<div class="viz-empty">아직 데이터가 없어요</div>'; return; }
+  el.classList.remove('result-empty');
+  el.innerHTML = sorted.map(([t, ns]) => {
+    const ti = TYPES.find(x=>x.key===t)||{icon:'💡',color:'#888'};
+    const chips = ns.map(n =>
+      `<span class="viz-note-chip" style="background:${n.bg};color:${n.tc}" title="${esc(n.text)}">${esc(n.text.slice(0,28))}${n.text.length>28?'…':''}</span>`
+    ).join('');
+    return `<div class="viz-type-group">
+      <div class="viz-type-header">
+        <span class="viz-type-icon">${ti.icon}</span>
+        <span class="viz-type-name">${t}</span>
+        <span class="viz-type-count">${ns.length}개</span>
+      </div>
+      <div class="viz-note-chips">${chips}</div>
+    </div>`;
+  }).join('');
+}
 
-  if (type === 'cluster') {
-    return `[주제: ${topic}]\n\n` + sortedTypes.map(([t,ns]) =>
-      `${TYPES.find(x=>x.key===t)?.icon||'💡'} ${t} — ${ns.length}개\n` +
-      ns.map(n => `  • ${n.text.slice(0,45)}${n.text.length>45?'…':''}`).join('\n')
-    ).join('\n\n');
-  }
-  if (type === 'summary') {
-    const top3 = byLikes.slice(0,3).map((n,i)=>`${i+1}. ${n.text.slice(0,50)}${n.text.length>50?'…':''} (❤️${n.likes||0})`).join('\n');
-    return `[주제: ${topic}]\n\n📊 전체 ${notes.length}개\n🏷 자주 등장한 키워드: ${topKw.join(', ')||'없음'}\n🎯 주요 유형: ${sortedTypes[0]?.[0]||'없음'}\n\n공감 Top 3:\n${top3}`;
-  }
-  if (type === 'expand') {
-    return `[주제: ${topic}]\n\n` + byLikes.slice(0,3).map((n,i) =>
-      `${i+1}. "${n.text.slice(0,55)}"\n   대상: ${n.target||'미정'} | 유형: ${n.type||'미분류'}\n   키워드: ${(n.keywords||[]).join(', ')||'없음'}\n   → 다음 스텝: 고객 인터뷰 → 프로토타입 → 검증`
-    ).join('\n\n');
-  }
-  if (type === 'gap') {
-    const used = new Set(notes.map(n=>n.type));
-    const missing = TYPES.filter(t=>!used.has(t.key)).slice(0,3);
-    const targets = [...new Set(notes.map(n=>n.target).filter(Boolean))];
-    return `[주제: ${topic}]\n\n🔍 아직 탐색 안 한 유형:\n${missing.length ? missing.map(t=>`  ${t.icon} ${t.key}`).join('\n') : '  모든 유형 커버 중!'}\n\n👥 다뤄진 대상:\n${targets.length ? targets.map(t=>`  • ${t}`).join('\n') : '  • 아직 대상 미설정'}\n\n❓ 팀이 던져볼 질문:\n  • 이 아이디어들의 공통 수익 모델은?\n  • 기존 경쟁 서비스와 차별점은?`;
-  }
-  if (type === 'mvp') {
-    return `[주제: ${topic}]\n\n` + byLikes.slice(0,3).map((n,i) =>
-      `🚀 ${i+1}. "${n.text.slice(0,50)}"\n   유형: ${n.type||'미분류'}\n   MVP 스텝: 노코드 프로토타입 → 10명 테스트 → 피드백 수집\n   예상 기간: 2~4주`
-    ).join('\n\n');
-  }
-  return '';
+/* ── 대상별 묶기 ── */
+function renderTargetViz() {
+  const el = document.getElementById('card-target-body');
+  if (!el) return;
+  const byTarget = {};
+  notes.forEach(n => {
+    const t = (n.target||'').trim() || '대상 미설정';
+    (byTarget[t]=byTarget[t]||[]).push(n);
+  });
+  const sorted = Object.entries(byTarget).sort((a,b)=>b[1].length-a[1].length);
+  const max = Math.max(1, sorted[0]?.[1].length||1);
+  el.classList.remove('result-empty');
+  el.innerHTML = sorted.map(([t, ns]) => {
+    const pct = Math.round(ns.length/max*100);
+    const chips = ns.map(n =>
+      `<span class="viz-note-chip" style="background:${n.bg};color:${n.tc}">${esc(n.text.slice(0,28))}${n.text.length>28?'…':''}</span>`
+    ).join('');
+    const isUnset = t==='대상 미설정';
+    return `<div class="viz-target-group">
+      <div class="viz-target-header">
+        <span class="viz-target-label">${isUnset?'❓':'👤'} ${esc(t)}
+          <span style="font-size:11px;font-weight:400;color:var(--text3)">${ns.length}개</span>
+        </span>
+        <div class="viz-target-bar-wrap">
+          <div class="viz-target-bar-track">
+            <div class="viz-target-bar-fill" style="width:${pct}%;${isUnset?'background:var(--text3)':''}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="viz-note-chips">${chips}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ── 키워드 분석 ── */
+function renderKeywordViz() {
+  const el = document.getElementById('card-keyword-body');
+  if (!el) return;
+  const kwCount = {};
+  notes.flatMap(n=>n.keywords||[]).forEach(k=>{ kwCount[k]=(kwCount[k]||0)+1; });
+  const sorted = Object.entries(kwCount).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if (!sorted.length) { el.innerHTML='<div class="viz-empty">아직 키워드가 없어요</div>'; return; }
+  const max = sorted[0][1];
+  const colors = ['#FFD23F','#FF6B35','#4ECDC4','#9C27B0','#4ade80','#60a5fa','#f472b6','#fb923c','#a78bfa','#34d399','#fbbf24','#e879f9'];
+  el.classList.remove('result-empty');
+  el.innerHTML = `<div class="viz-kw-grid">${sorted.map(([k,v],i) => {
+    const pct = Math.round(v/max*100);
+    const col = colors[i%colors.length];
+    return `<div class="viz-kw-item">
+      <div class="viz-kw-count" style="color:${col}">${v}</div>
+      <div class="viz-kw-label">#${esc(k)}</div>
+      <div class="viz-kw-bar"><div class="viz-kw-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+    </div>`;
+  }).join('')}</div>`;
 }
 
 /* ── 공감 랭킹 ── */
